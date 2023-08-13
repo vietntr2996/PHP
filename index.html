@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>  
+<html>
+<head>
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.error {
+  color: #FF0000;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+</style>
+</head>
+<body>  
+
+<?php
+// define variables and set to empty values
+$nameErr = $emailErr = $genderErr = "";
+$name = $email = $gender = $comment = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["name"])) {
+    $nameErr = "Name is required";
+  } else {
+    $name = test_input($_POST["name"]);
+  }
+  
+  if (empty($_POST["email"])) {
+    $emailErr = "Email is required";
+  } else {
+    $email = test_input($_POST["email"]);
+  }
+
+  if (empty($_POST["comment"])) {
+    $comment = "";
+  } else {
+    $comment = test_input($_POST["comment"]);
+  }
+
+  if (empty($_POST["gender"])) {
+    $genderErr = "Gender is required";
+  } else {
+    $gender = test_input($_POST["gender"]);
+  }
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>
+
+<div class="container">
+  <h2>PHP Form Validation Example</h2>
+  <p><span class="error">* required field</span></p>
+  <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" name="name" id="name">
+      <span class="error">* <?php echo $nameErr;?></span>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">E-mail:</label>
+      <input type="text" name="email" id="email">
+      <span class="error">* <?php echo $emailErr;?></span>
+    </div>
+    
+    <div class="form-group">
+      <label for="website">Website:</label>
+      <input type="text" name="website" id="website">
+    </div>
+    
+    <div class="form-group">
+      <label for="comment">Comment:</label>
+      <textarea name="comment" id="comment" rows="5" cols="40"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label>Gender:</label>
+      <input type="radio" name="gender" value="female">Female
+      <input type="radio" name="gender" value="male">Male
+      <input type="radio" name="gender" value="other">Other
+      <span class="error">* <?php echo $genderErr;?></span>
+    </div>
+    
+    <button type="submit" name="submit" >Submit</button>  
+  </form>
+
+  <?php
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo "<h2>Your Input:</h2>";
+    echo "Name: " . $name . "<br>";
+    echo "E-mail: " . $email . "<br>";
+    echo "Website: " . $website . "<br>";
+    echo "Comment: " . $comment . "<br>";
+    echo "Gender: " . $gender . "<br>";
+  }
+  ?>
+  <button type="real-submit" name="real-submit" onclick="location.href='https://hentai-vn.com/';">REal-Submit</button>  
+</div>
+
+</body>
+</html>
